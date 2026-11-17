@@ -6,6 +6,11 @@ $old = Get-Content -Raw -LiteralPath $OldManifest | ConvertFrom-Json
 if ($NewManifest) { $new = Get-Content -Raw -LiteralPath $NewManifest | ConvertFrom-Json }
 else { $new = & "$PSScriptRoot\Review-Migration.ps1" | ConvertFrom-Json }
 foreach ($report in $old,$new) {
+    foreach ($item in $report.Items) {
+        if ($item.Kind -notin 'Package','Registration' -or [string]::IsNullOrWhiteSpace($item.Key)) {
+            throw 'Manifest item needs a recognized Kind and nonempty Key.'
+        }
+    }
     if ($report.Format -ne 'migration-1' -or $report.Items -isnot [array]) { throw 'Expected a migration-1 manifest.' }
 }
 $observed = @{}

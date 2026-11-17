@@ -2,6 +2,8 @@
 
 Compare installed Windows desktop registrations and WinGet package IDs before and after a PC migration. Produce a local reinstall and backup checklist.
 
+Feel free to test locally by comparing a saved manifest with itself. Every observed identity should appear as `Present`.
+
 ## For AI agents
 
 Start with [AGENTS.md](AGENTS.md). Run the scripts as the signed-in user in Windows PowerShell 5.1. Keep reports local unless the owner chooses to share them.
@@ -9,7 +11,7 @@ Start with [AGENTS.md](AGENTS.md). Run the scripts as the signed-in user in Wind
 ## Usage
 
 ```powershell
-.\Review-Migration.ps1 | Set-Content old.json
+.\Review-Migration.ps1 | Set-Content -Encoding UTF8 old.json
 .\Compare-Migration.ps1 -OldManifest .\old.json
 ```
 
